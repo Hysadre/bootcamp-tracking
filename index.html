@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botanica — Soins Naturels</title>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KVKN64XD');</script>
+  <!-- End Google Tag Manager -->
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #faf9f6;
+      color: #2c2c2c;
+    }
+
+    /* NAV */
+    nav {
+      background: #fff;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e8e4dc;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #3a5c3a;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2c2c;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover { color: #3a5c3a; }
+
+    .cart-btn {
+      background: #3a5c3a;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #e8f0e8 0%, #f5f0e8 100%);
+      padding: 100px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 500px;
+    }
+
+    .hero-text { max-width: 500px; }
+
+    .hero-tag {
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #3a5c3a;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-btns { display: flex; gap: 16px; }
+
+    .btn-primary {
+      background: #3a5c3a;
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-primary:hover { background: #2d472d; }
+
+    .btn-secondary {
+      background: transparent;
+      color: #3a5c3a;
+      border: 2px solid #3a5c3a;
+      padding: 16px 36px;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: #3a5c3a;
+      color: white;
+    }
+
+    .hero-visual {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, #c8dcc8, #a8c4a8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+    }
+
+    /* PRODUCTS */
+    .products {
+      padding: 80px 60px;
+      background: #fff;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: #faf9f6;
+      border: 1px solid #e8e4dc;
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    .product-emoji { font-size: 4rem; margin-bottom: 20px; }
+
+    .product-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .product-price {
+      font-size: 1.3rem;
+      color: #3a5c3a;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      background: #3a5c3a;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .add-to-cart:hover { background: #2d472d; }
+
+    /* NEWSLETTER */
+    .newsletter {
+      background: #3a5c3a;
+      padding: 80px 60px;
+      text-align: center;
+      color: white;
+    }
+
+    .newsletter h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .newsletter p {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 40px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 16px 24px;
+      border: none;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .newsletter-form button {
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a;
+      color: #888;
+      padding: 40px 60px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #3a5c3a;
+      color: white;
+      padding: 16px 24px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KVKN64XD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- NAV -->
+<nav>
+  <div class="logo">BOTANICA</div>
+  <ul class="nav-links">
+    <li><a href="#" id="nav-produits">Produits</a></li>
+    <li><a href="#" id="nav-about">À propos</a></li>
+    <li><a href="#" id="nav-contact">Contact</a></li>
+  </ul>
+  <button class="cart-btn" id="nav-panier">Panier (0)</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">✦ Cosmétiques naturels</div>
+    <h1>La nature au cœur de votre routine</h1>
+    <p>Des soins formulés avec des ingrédients 100% naturels, sans compromis sur l'efficacité.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" id="hero-decouvrir">Découvrir la gamme</button>
+      <button class="btn-secondary" id="hero-about">Notre histoire</button>
+    </div>
+  </div>
+  <div class="hero-visual">🌿</div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="produits">
+  <div class="section-title">
+    <h2>Nos best-sellers</h2>
+    <p>Les produits préférés de notre communauté</p>
+  </div>
+
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-emoji">🌹</div>
+      <div class="product-name">Huile Rose Musquée</div>
+      <div class="product-desc">Régénérante et anti-âge. Idéale pour les peaux matures et ternes.</div>
+      <div class="product-price">34,90 €</div>
+      <button class="add-to-cart"
+        id="add-to-cart-1"
+        data-product-id="SKU001"
+        data-product-name="Huile Rose Musquée"
+        data-price="34.90"
+        data-category="Huiles">
+        Ajouter au panier
+      </button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-emoji">🫐</div>
+      <div class="product-name">Sérum Myrtille</div>
+      <div class="product-desc">Antioxydant puissant. Protège et illumine le teint au quotidien.</div>
+      <div class="product-price">42,00 €</div>
+      <button class="add-to-cart"
+        id="add-to-cart-2"
+        data-product-id="SKU002"
+        data-product-name="Sérum Myrtille"
+        data-price="42.00"
+        data-category="Sérums">
+        Ajouter au panier
+      </button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-emoji">🌾</div>
+      <div class="product-name">Crème Avoine</div>
+      <div class="product-desc">Apaisante et nourrissante. Convient aux peaux sensibles et réactives.</div>
+      <div class="product-price">28,50 €</div>
+      <button class="add-to-cart"
+        id="add-to-cart-3"
+        data-product-id="SKU003"
+        data-product-name="Crème Avoine"
+        data-price="28.50"
+        data-category="Crèmes">
+        Ajouter au panier
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Rejoignez la communauté</h2>
+  <p>Recevez nos conseils beauté et offres exclusives</p>
+  <form class="newsletter-form" id="newsletter-form">
+    <input type="email" id="email-input" placeholder="Votre adresse email" required>
+    <button type="submit" id="newsletter-submit">S'inscrire</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Botanica — Tous droits réservés</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ——— UTILITAIRES ———
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  let cartCount = 0;
+
+  // ——— ADD TO CART ———
+  document.querySelectorAll('.add-to-cart').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const productId   = this.dataset.productId;
+      const productName = this.dataset.productName;
+      const price       = parseFloat(this.dataset.price);
+      const category    = this.dataset.category;
+
+      cartCount++;
+      document.getElementById('nav-panier').textContent = 'Panier (' + cartCount + ')';
+      showToast('✓ ' + productName + ' ajouté au panier');
+
+      // dataLayer push
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'add_to_cart',
+        product_id: productId,
+        product_name: productName,
+        price: price,
+        category: category,
+        currency: 'EUR'
+      });
+    });
+  });
+
+  // ——— NAVIGATION CLICKS ———
+  ['nav-produits','nav-about','nav-contact'].forEach(function(id) {
+    document.getElementById(id).addEventListener('click', function(e) {
+      e.preventDefault();
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'navigation_click',
+        link_text: this.textContent,
+        link_id: id
+      });
+    });
+  });
+
+  // ——— HERO CLICKS ———
+  document.getElementById('hero-decouvrir').addEventListener('click', function() {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'cta_click',
+      cta_text: 'Découvrir la gamme',
+      cta_location: 'hero'
+    });
+    document.getElementById('produits').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('hero-about').addEventListener('click', function() {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'cta_click',
+      cta_text: 'Notre histoire',
+      cta_location: 'hero'
+    });
+  });
+
+  // ——— NEWSLETTER ———
+  document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email-input').value;
+    showToast('✓ Inscription confirmée !');
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'newsletter_signup',
+      form_location: 'footer'
+    });
+    this.reset();
+  });
+
+  // ——— PANIER ———
+  document.getElementById('nav-panier').addEventListener('click', function() {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'view_cart',
+      cart_items: cartCount
+    });
+    showToast('Panier : ' + cartCount + ' article(s)');
+  });
+</script>
+
+</body>
+</html>
