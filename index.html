@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Botanica — Soins Naturels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -13,297 +14,556 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-KVKN64XD');</script>
   <!-- End Google Tag Manager -->
- 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60VCZV3CD4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-60VCZV3CD4');
-</script>
 
   <style>
+    :root {
+      --cream: #f7f3ed;
+      --green: #2d4a2d;
+      --green-light: #4a7c4a;
+      --gold: #c4a882;
+      --dark: #1a1a18;
+      --text: #3a3a35;
+      --border: #e0d8cc;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Georgia', serif;
-      background: #faf9f6;
-      color: #2c2c2c;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* POPUP */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26,26,24,0.6);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 0.5s 1s forwards;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .popup {
+      background: var(--cream);
+      width: 560px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      transform: translateY(20px);
+      animation: slideUp 0.5s 1s forwards;
+    }
+
+    @keyframes slideUp { to { transform: translateY(0); } }
+
+    .popup-visual {
+      background: var(--green);
+      padding: 50px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .popup-visual .leaf { font-size: 4rem; margin-bottom: 16px; }
+
+    .popup-visual h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .popup-content {
+      padding: 50px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .popup-tag {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .popup-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .popup-content p {
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .popup-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      background: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .popup-btn {
+      width: 100%;
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .popup-btn:hover { background: var(--green-light); }
+
+    .popup-skip {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #aaa;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text);
+      opacity: 0.5;
     }
 
     /* NAV */
     nav {
-      background: #fff;
-      padding: 20px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e8e4dc;
       position: sticky;
       top: 0;
       z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 0 60px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      color: #3a5c3a;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--green);
+      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
-      gap: 40px;
+      gap: 36px;
       list-style: none;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: #2c2c2c;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
+      color: var(--text);
+      transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: #3a5c3a; }
+    .nav-links a:hover { color: var(--green); }
 
-    .cart-btn {
-      background: #3a5c3a;
-      color: white;
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    .cart-icon {
+      background: none;
       border: none;
-      padding: 10px 24px;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
       cursor: pointer;
-      text-transform: uppercase;
+      font-size: 1.1rem;
+      position: relative;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--green);
+      color: white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* HERO */
     .hero {
-      background: linear-gradient(135deg, #e8f0e8 0%, #f5f0e8 100%);
-      padding: 100px 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 500px;
+      min-height: calc(100vh - 64px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
 
-    .hero-text { max-width: 500px; }
+    .hero-left {
+      background: var(--green);
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      bottom: -100px;
+      right: -100px;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      bottom: -200px;
+      right: -200px;
+    }
 
     .hero-tag {
-      font-size: 0.8rem;
-      letter-spacing: 3px;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      color: #3a5c3a;
-      margin-bottom: 20px;
+      color: var(--gold);
+      margin-bottom: 24px;
     }
 
-    .hero h1 {
-      font-size: 3.2rem;
-      line-height: 1.2;
-      margin-bottom: 20px;
-      color: #1a1a1a;
+    .hero-left h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 24px;
     }
 
-    .hero p {
-      font-size: 1.1rem;
-      color: #666;
-      line-height: 1.7;
-      margin-bottom: 40px;
+    .hero-left h1 em {
+      font-style: italic;
+      color: var(--gold);
     }
 
-    .hero-btns { display: flex; gap: 16px; }
+    .hero-left p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      opacity: 0.75;
+      max-width: 380px;
+      margin-bottom: 48px;
+    }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 
     .btn-primary {
-      background: #3a5c3a;
-      color: white;
+      background: white;
+      color: var(--green);
       border: none;
-      padding: 16px 36px;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      padding: 14px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .btn-primary:hover { background: #2d472d; }
-
-    .btn-secondary {
-      background: transparent;
-      color: #3a5c3a;
-      border: 2px solid #3a5c3a;
-      padding: 16px 36px;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
       transition: all 0.3s;
     }
 
-    .btn-secondary:hover {
-      background: #3a5c3a;
+    .btn-primary:hover { background: var(--gold); color: white; }
+
+    .btn-ghost {
+      background: transparent;
       color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 14px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
     }
 
-    .hero-visual {
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, #c8dcc8, #a8c4a8);
-      border-radius: 50%;
+    .btn-ghost:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+    .hero-right {
+      background: #e8e0d4;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 8rem;
+      font-size: 12rem;
+      position: relative;
     }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      display: flex;
+      gap: 40px;
+    }
+
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--green);
+    }
+    .stat-label { font-size: 0.7rem; letter-spacing: 1px; color: #888; text-transform: uppercase; }
 
     /* PRODUCTS */
-    .products {
-      padding: 80px 60px;
-      background: #fff;
-    }
+    .products { padding: 100px 60px; }
 
-    .section-title {
-      text-align: center;
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
       margin-bottom: 60px;
     }
 
-    .section-title h2 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
     }
 
-    .section-title p {
-      color: #888;
-      font-size: 0.95rem;
+    .section-header h2 em { font-style: italic; color: var(--gold); }
+
+    .filter-tabs { display: flex; gap: 8px; }
+
+    .filter-tab {
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      background: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-tab.active,
+    .filter-tab:hover {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
     }
 
     .products-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      max-width: 1100px;
-      margin: 0 auto;
+      gap: 2px;
     }
 
     .product-card {
-      background: #faf9f6;
-      border: 1px solid #e8e4dc;
-      padding: 30px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      background: white;
+      padding: 40px 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: block;
     }
 
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    .product-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--green);
+      transform: scaleX(0);
+      transition: transform 0.3s;
     }
 
-    .product-emoji { font-size: 4rem; margin-bottom: 20px; }
+    .product-card:hover::before { transform: scaleX(1); }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+
+    .product-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 3px 10px;
+      margin-bottom: 24px;
+    }
+
+    .product-emoji { font-size: 3.5rem; margin-bottom: 20px; display: block; }
 
     .product-name {
-      font-size: 1.1rem;
-      font-weight: bold;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
       margin-bottom: 8px;
     }
 
     .product-desc {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: #888;
-      margin-bottom: 20px;
-      line-height: 1.6;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .product-price {
-      font-size: 1.3rem;
-      color: #3a5c3a;
-      font-weight: bold;
-      margin-bottom: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--green);
     }
 
     .add-to-cart {
-      width: 100%;
-      background: #3a5c3a;
+      background: var(--green);
       color: white;
       border: none;
-      padding: 12px;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+      padding: 10px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.2s;
     }
 
-    .add-to-cart:hover { background: #2d472d; }
+    .add-to-cart:hover { background: var(--green-light); }
 
-    /* NEWSLETTER */
-    .newsletter {
-      background: #3a5c3a;
-      padding: 80px 60px;
-      text-align: center;
+    /* BANNER */
+    .banner {
+      background: var(--dark);
       color: white;
+      padding: 80px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
     }
 
-    .newsletter h2 {
-      font-size: 2rem;
-      margin-bottom: 12px;
+    .banner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      line-height: 1.2;
     }
 
-    .newsletter p {
-      font-size: 1rem;
-      opacity: 0.8;
-      margin-bottom: 40px;
-    }
+    .banner h2 em { font-style: italic; color: var(--gold); }
+
+    .banner p { font-size: 0.88rem; line-height: 1.8; opacity: 0.6; margin-bottom: 32px; }
 
     .newsletter-form {
       display: flex;
       gap: 0;
-      max-width: 500px;
-      margin: 0 auto;
     }
 
     .newsletter-form input {
       flex: 1;
-      padding: 16px 24px;
-      border: none;
-      font-size: 0.95rem;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: none;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
       outline: none;
     }
 
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+
     .newsletter-form button {
-      background: #1a1a1a;
+      background: var(--gold);
       color: white;
       border: none;
-      padding: 16px 32px;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+      padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     /* FOOTER */
     footer {
-      background: #1a1a1a;
-      color: #888;
+      background: var(--green);
+      color: white;
       padding: 40px 60px;
-      text-align: center;
-      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0.9;
     }
+
+    footer .logo { color: white; font-size: 1.2rem; }
+    footer p { font-size: 0.78rem; opacity: 0.5; }
 
     /* TOAST */
     .toast {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #3a5c3a;
+      background: var(--dark);
       color: white;
       padding: 16px 24px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       opacity: 0;
       transition: opacity 0.3s;
       pointer-events: none;
       z-index: 999;
+      border-left: 3px solid var(--gold);
     }
 
     .toast.show { opacity: 1; }
@@ -316,108 +576,208 @@
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-visual">
+      <div class="leaf">🌿</div>
+      <h3>Bienvenue chez Botanica</h3>
+    </div>
+    <div class="popup-content">
+      <div class="popup-tag">Offre exclusive</div>
+      <h2>−10% sur votre première commande</h2>
+      <p>Inscrivez-vous à notre newsletter et recevez votre code promo immédiatement.</p>
+      <input class="popup-input" type="email" id="popup-email" placeholder="votre@email.com">
+      <button class="popup-btn" onclick="submitPopup()">Obtenir mon code</button>
+      <div class="popup-skip" onclick="closePopup()">Non merci, je paye plein tarif</div>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
-  <div class="logo">BOTANICA</div>
+  <a href="index.html" class="logo">BOTANICA</a>
   <ul class="nav-links">
-    <li><a href="#" id="nav-produits">Produits</a></li>
+    <li><a href="#produits" id="nav-produits">Produits</a></li>
+    <li><a href="#" id="nav-rituel">Ritual</a></li>
     <li><a href="#" id="nav-about">À propos</a></li>
-    <li><a href="#" id="nav-contact">Contact</a></li>
   </ul>
-  <button class="cart-btn" id="nav-panier">Panier (0)</button>
+  <div class="nav-right">
+    <button class="cart-icon" id="nav-panier" onclick="goToCart()">
+      🛒 <span class="cart-badge" id="cart-badge">0</span>
+    </button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-text">
-    <div class="hero-tag">✦ Cosmétiques naturels</div>
-    <h1>La nature au cœur de votre routine</h1>
-    <p>Des soins formulés avec des ingrédients 100% naturels, sans compromis sur l'efficacité.</p>
+  <div class="hero-left">
+    <div class="hero-tag">✦ Nouvelle collection Printemps 2026</div>
+    <h1>La nature,<br><em>sublimée</em><br>à l'état pur</h1>
+    <p>Des soins formulés avec des ingrédients botaniques d'exception. Efficacité prouvée, respect absolu de votre peau.</p>
     <div class="hero-btns">
-      <button class="btn-primary" id="hero-decouvrir">Découvrir la gamme</button>
-      <button class="btn-secondary" id="hero-about">Notre histoire</button>
+      <a href="#produits" class="btn-primary" id="hero-decouvrir">Découvrir</a>
+      <a href="#" class="btn-ghost" id="hero-ritual">Notre ritual</a>
     </div>
   </div>
-  <div class="hero-visual">🌿</div>
+  <div class="hero-right">
+    🌸
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Naturel</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12k+</div>
+        <div class="stat-label">Clientes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Parabènes</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- PRODUCTS -->
 <section class="products" id="produits">
-  <div class="section-title">
-    <h2>Nos best-sellers</h2>
-    <p>Les produits préférés de notre communauté</p>
+  <div class="section-header">
+    <h2>Nos <em>best-sellers</em></h2>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProducts('tous')">Tous</button>
+      <button class="filter-tab" onclick="filterProducts('huiles')">Huiles</button>
+      <button class="filter-tab" onclick="filterProducts('serums')">Sérums</button>
+      <button class="filter-tab" onclick="filterProducts('cremes')">Crèmes</button>
+    </div>
   </div>
 
-  <div class="products-grid">
+  <div class="products-grid" id="products-grid">
 
-    <div class="product-card">
-      <div class="product-emoji">🌹</div>
+    <a href="produit.html?id=SKU001" class="product-card" data-category="huiles"
+       data-product-id="SKU001" data-product-name="Huile Rose Musquée" data-price="34.90">
+      <span class="product-badge">Best-seller</span>
+      <span class="product-emoji">🌹</span>
       <div class="product-name">Huile Rose Musquée</div>
       <div class="product-desc">Régénérante et anti-âge. Idéale pour les peaux matures et ternes.</div>
-      <div class="product-price">34,90 €</div>
-      <button class="add-to-cart"
-        id="add-to-cart-1"
-        data-product-id="SKU001"
-        data-product-name="Huile Rose Musquée"
-        data-price="34.90"
-        data-category="Huiles">
-        Ajouter au panier
-      </button>
-    </div>
+      <div class="product-footer">
+        <div class="product-price">34,90 €</div>
+        <button class="add-to-cart" onclick="addToCart(event, 'SKU001', 'Huile Rose Musquée', 34.90, 'Huiles')">
+          Ajouter
+        </button>
+      </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-emoji">🫐</div>
+    <a href="produit.html?id=SKU002" class="product-card" data-category="serums"
+       data-product-id="SKU002" data-product-name="Sérum Myrtille" data-price="42.00">
+      <span class="product-badge">Nouveauté</span>
+      <span class="product-emoji">🫐</span>
       <div class="product-name">Sérum Myrtille</div>
       <div class="product-desc">Antioxydant puissant. Protège et illumine le teint au quotidien.</div>
-      <div class="product-price">42,00 €</div>
-      <button class="add-to-cart"
-        id="add-to-cart-2"
-        data-product-id="SKU002"
-        data-product-name="Sérum Myrtille"
-        data-price="42.00"
-        data-category="Sérums">
-        Ajouter au panier
-      </button>
-    </div>
+      <div class="product-footer">
+        <div class="product-price">42,00 €</div>
+        <button class="add-to-cart" onclick="addToCart(event, 'SKU002', 'Sérum Myrtille', 42.00, 'Sérums')">
+          Ajouter
+        </button>
+      </div>
+    </a>
 
-    <div class="product-card">
-      <div class="product-emoji">🌾</div>
+    <a href="produit.html?id=SKU003" class="product-card" data-category="cremes"
+       data-product-id="SKU003" data-product-name="Crème Avoine" data-price="28.50">
+      <span class="product-badge">Essentiel</span>
+      <span class="product-emoji">🌾</span>
       <div class="product-name">Crème Avoine</div>
       <div class="product-desc">Apaisante et nourrissante. Convient aux peaux sensibles et réactives.</div>
-      <div class="product-price">28,50 €</div>
-      <button class="add-to-cart"
-        id="add-to-cart-3"
-        data-product-id="SKU003"
-        data-product-name="Crème Avoine"
-        data-price="28.50"
-        data-category="Crèmes">
-        Ajouter au panier
-      </button>
-    </div>
+      <div class="product-footer">
+        <div class="product-price">28,50 €</div>
+        <button class="add-to-cart" onclick="addToCart(event, 'SKU003', 'Crème Avoine', 28.50, 'Crèmes')">
+          Ajouter
+        </button>
+      </div>
+    </a>
+
+    <a href="produit.html?id=SKU004" class="product-card" data-category="huiles"
+       data-product-id="SKU004" data-product-name="Huile Argan Pure" data-price="38.00">
+      <span class="product-badge">Premium</span>
+      <span class="product-emoji">🌰</span>
+      <div class="product-name">Huile Argan Pure</div>
+      <div class="product-desc">Nourrit en profondeur. Pour les peaux très sèches et les cheveux.</div>
+      <div class="product-footer">
+        <div class="product-price">38,00 €</div>
+        <button class="add-to-cart" onclick="addToCart(event, 'SKU004', 'Huile Argan Pure', 38.00, 'Huiles')">
+          Ajouter
+        </button>
+      </div>
+    </a>
+
+    <a href="produit.html?id=SKU005" class="product-card" data-category="serums"
+       data-product-id="SKU005" data-product-name="Sérum Vitamine C" data-price="48.00">
+      <span class="product-badge">Coup d'éclat</span>
+      <span class="product-emoji">🍋</span>
+      <div class="product-name">Sérum Vitamine C</div>
+      <div class="product-desc">Illuminant et unificateur. Résultat visible dès 7 jours.</div>
+      <div class="product-footer">
+        <div class="product-price">48,00 €</div>
+        <button class="add-to-cart" onclick="addToCart(event, 'SKU005', 'Sérum Vitamine C', 48.00, 'Sérums')">
+          Ajouter
+        </button>
+      </div>
+    </a>
+
+    <a href="produit.html?id=SKU006" class="product-card" data-category="cremes"
+       data-product-id="SKU006" data-product-name="Baume Calendula" data-price="22.00">
+      <span class="product-badge">Douceur</span>
+      <span class="product-emoji">🌼</span>
+      <div class="product-name">Baume Calendula</div>
+      <div class="product-desc">Multi-usage réparateur. Lèvres, mains, contours. La trousse essentielle.</div>
+      <div class="product-footer">
+        <div class="product-price">22,00 €</div>
+        <button class="add-to-cart" onclick="addToCart(event, 'SKU006', 'Baume Calendula', 22.00, 'Crèmes')">
+          Ajouter
+        </button>
+      </div>
+    </a>
 
   </div>
 </section>
 
-<!-- NEWSLETTER -->
-<section class="newsletter">
-  <h2>Rejoignez la communauté</h2>
-  <p>Recevez nos conseils beauté et offres exclusives</p>
-  <form class="newsletter-form" id="newsletter-form">
-    <input type="email" id="email-input" placeholder="Votre adresse email" required>
-    <button type="submit" id="newsletter-submit">S'inscrire</button>
-  </form>
+<!-- BANNER -->
+<section class="banner">
+  <div>
+    <h2>Rejoignez <em>12 000</em> femmes qui font confiance à la nature</h2>
+  </div>
+  <div>
+    <p>Recevez nos conseils beauté, nos nouvelles formules et des offres réservées à notre communauté.</p>
+    <form class="newsletter-form" id="newsletter-form">
+      <input type="email" id="newsletter-email" placeholder="votre@email.com" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 Botanica — Tous droits réservés</p>
+  <a href="index.html" class="logo">BOTANICA</a>
+  <p>© 2026 Botanica — Soins naturels d'exception</p>
 </footer>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-  // ——— UTILITAIRES ———
+  // ——— CART STATE ———
+  let cart = JSON.parse(localStorage.getItem('botanica_cart') || '[]');
+  updateCartBadge();
+
+  function updateCartBadge() {
+    const total = cart.reduce((sum, item) => sum + item.qty, 0);
+    document.getElementById('cart-badge').textContent = total;
+  }
+
+  function saveCart() {
+    localStorage.setItem('botanica_cart', JSON.stringify(cart));
+  }
+
+  // ——— TOAST ———
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -425,87 +785,92 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     setTimeout(() => t.classList.remove('show'), 3000);
   }
 
-  let cartCount = 0;
-
   // ——— ADD TO CART ———
-  document.querySelectorAll('.add-to-cart').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      const productId   = this.dataset.productId;
-      const productName = this.dataset.productName;
-      const price       = parseFloat(this.dataset.price);
-      const category    = this.dataset.category;
+  function addToCart(e, id, name, price, category) {
+    e.preventDefault();
+    e.stopPropagation();
 
-      cartCount++;
-      document.getElementById('nav-panier').textContent = 'Panier (' + cartCount + ')';
-      showToast('✓ ' + productName + ' ajouté au panier');
+    const existing = cart.find(i => i.id === id);
+    if (existing) existing.qty++;
+    else cart.push({ id, name, price, category, qty: 1 });
+    saveCart();
+    updateCartBadge();
+    showToast('✓ ' + name + ' ajouté au panier');
 
-      // dataLayer push
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: 'add_to_cart',
-        product_id: productId,
-        product_name: productName,
-        price: price,
-        category: category,
-        currency: 'EUR'
-      });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'add_to_cart',
+      product_id: id,
+      product_name: name,
+      price: price,
+      category: category,
+      currency: 'EUR',
+      quantity: 1
     });
-  });
+  }
 
-  // ——— NAVIGATION CLICKS ———
-  ['nav-produits','nav-about','nav-contact'].forEach(function(id) {
-    document.getElementById(id).addEventListener('click', function(e) {
-      e.preventDefault();
+  function goToCart() {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'view_cart', cart_items: cart.length });
+    window.location.href = 'panier.html';
+  }
+
+  // ——— POPUP ———
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'popup_close', popup_name: 'welcome_10off' });
+  }
+
+  function submitPopup() {
+    const email = document.getElementById('popup-email').value;
+    if (!email) return;
+    closePopup();
+    showToast('✓ Code BOTANICA10 envoyé sur ' + email);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'popup_signup',
+      popup_name: 'welcome_10off',
+      has_email: true
+    });
+  }
+
+  // ——— FILTERS ———
+  function filterProducts(cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.style.display = (cat === 'tous' || card.dataset.category === cat) ? 'block' : 'none';
+    });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'filter_click', filter_value: cat });
+  }
+
+  // ——— NAVIGATION ———
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function() {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'navigation_click',
         link_text: this.textContent,
-        link_id: id
+        link_id: this.id
       });
-    });
-  });
-
-  // ——— HERO CLICKS ———
-  document.getElementById('hero-decouvrir').addEventListener('click', function() {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'cta_click',
-      cta_text: 'Découvrir la gamme',
-      cta_location: 'hero'
-    });
-    document.getElementById('produits').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  document.getElementById('hero-about').addEventListener('click', function() {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'cta_click',
-      cta_text: 'Notre histoire',
-      cta_location: 'hero'
     });
   });
 
   // ——— NEWSLETTER ———
   document.getElementById('newsletter-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    const email = document.getElementById('email-input').value;
     showToast('✓ Inscription confirmée !');
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'newsletter_signup',
-      form_location: 'footer'
-    });
+    window.dataLayer.push({ event: 'newsletter_signup', form_location: 'banner' });
     this.reset();
   });
 
-  // ——— PANIER ———
-  document.getElementById('nav-panier').addEventListener('click', function() {
+  // ——— HERO BTNS ———
+  document.getElementById('hero-decouvrir').addEventListener('click', function() {
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'view_cart',
-      cart_items: cartCount
-    });
-    showToast('Panier : ' + cartCount + ' article(s)');
+    window.dataLayer.push({ event: 'cta_click', cta_text: 'Découvrir', cta_location: 'hero' });
   });
 </script>
 
